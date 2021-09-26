@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"p5_package","l":"GenericClassMain"},{"p":"p5_package","l":"GenericQueueClass"},{"p":"p5_package","l":"GenericStackClass"},{"p":"p5_package","l":"StudentClass"}]
