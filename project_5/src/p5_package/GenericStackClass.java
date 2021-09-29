@@ -14,7 +14,8 @@ package p5_package;
  *
  * @param <GenericData> Generic object class
  */
-public class GenericStackClass<GenericData extends Comparable<GenericData>> {
+public class GenericStackClass<GenericData extends Comparable<GenericData>> 
+{
 
 	/**
 	 * constant for default size of stack
@@ -46,9 +47,7 @@ public class GenericStackClass<GenericData extends Comparable<GenericData>> {
 	 */
 	public GenericStackClass()
 	{
-		stackCapacity = DEFAULT_CAPACITY;
-		
-		stackArray = new Object[stackCapacity];
+		this(DEFAULT_CAPACITY);
 	}
 	
 	/**
@@ -61,6 +60,8 @@ public class GenericStackClass<GenericData extends Comparable<GenericData>> {
 		stackCapacity = capacity;
 		
 		stackArray = new Object[stackCapacity];
+		
+		stackSize = 0;
 	}
 	
 	/**
@@ -187,7 +188,18 @@ public class GenericStackClass<GenericData extends Comparable<GenericData>> {
 	 */
 	public void resize()
 	{
+		int index;
+		
 		stackCapacity *= 2;
+		
+		Object[] tempArray = new Object[stackCapacity];
+		
+		for(index = 0; index < stackSize; index++)
+		{
+			tempArray[index] = stackArray[index];
+		}
+		
+		stackArray = tempArray;
 	}
 	
 }

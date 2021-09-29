@@ -16,7 +16,8 @@ package p5_package;
  * 
  * @param <GenericData> Generic object class
  */
-public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
+public class GenericQueueClass<GenericData extends Comparable<GenericData>> 
+{
 
 	/**
 	 * constant for default size of queue
@@ -58,13 +59,7 @@ public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
 	 */
 	public GenericQueueClass()
 	{
-		queueCapacity = DEFAULT_CAPACITY;
-		
-		queueArray = new Object[queueCapacity];
-		
-		frontIndex = 0;
-		
-		rearIndex = 0;
+		this(DEFAULT_CAPACITY);
 	}
 	
 	/**
@@ -78,8 +73,8 @@ public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
 		
 		queueArray = new Object[queueCapacity];
 		
+		queueSize = 0;
 		frontIndex = 0;
-		
 		rearIndex = 0;
 	}
 	
@@ -90,6 +85,8 @@ public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
 	public void clear()
 	{
 		queueSize = 0;
+		frontIndex = 0;
+		rearIndex = 0;
 	}
 	
 	/**
@@ -102,9 +99,9 @@ public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
 	{
 		if(!isEmpty())
 		{
-			frontIndex--;
+			frontIndex = (frontIndex - 1) % queueCapacity;
 			queueSize--;
-			
+
 			return (GenericData) queueArray[frontIndex];
 		}
 		
@@ -139,8 +136,7 @@ public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
 				System.out.println();
 				
 				numSpaces += 2;
-			}
-			
+			}		
 		}
 	}
 	
@@ -154,7 +150,7 @@ public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
 	public void enqueue(GenericData newValue)
 	{
 		int index;
-		
+
 		if(queueSize >= queueCapacity)
 			resize();
 		
@@ -166,7 +162,9 @@ public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
 		queueArray[rearIndex] = newValue;
 		
 		frontIndex++;
+		
 		queueSize++;
+		
 	}
 	
 	/**
@@ -217,7 +215,18 @@ public class GenericQueueClass<GenericData extends Comparable<GenericData>> {
 	 */
 	public void resize()
 	{
+		int index;
+		
 		queueCapacity *= 2;
+		
+		Object[] tempArray = new Object[queueCapacity];
+		
+		for(index = 0; index < queueSize; index++)
+		{
+			tempArray[index] = queueArray[index];
+		}
+		
+		queueArray = tempArray;
 	}
 	
 }
